@@ -6,7 +6,7 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-var scores, roundScore, activePlayer, gamePlaying, lastDice; // global scope variables
+var scores, roundScore, activePlayer, gamePlaying, lastDice, namePlayer0, namePlayer1; // global scope variables
 
 initGame();
 
@@ -76,7 +76,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 		if (input) {
 			winningScore = input;
 		} else {
-			winningScore = 10;
+			winningScore = 100; // default winning score
 		}
 
 		// check if player won the game
@@ -136,8 +136,8 @@ function initGame() {
 	document.getElementById('current-1').textContent = '0';
 
 	// change back WINNER text to player name
-	document.querySelector('#name-0').textContent = 'Player 1';
-	document.querySelector('#name-1').textContent = 'Player 2';
+	document.querySelector('#name-0').textContent = namePlayer0;
+	document.querySelector('#name-1').textContent = namePlayer1;
 
 	// remove active & winner classes
 	document.querySelector('.player-0-panel').classList.remove('winner');
@@ -150,3 +150,24 @@ function initGame() {
 };
 
 
+// *********** STARTSCREEN FUNCTION **************************************************************
+function submitStartScreenData() {
+ 
+    // get all the Information
+    namePlayer0 = document.getElementById('player0').value;
+    namePlayer1 = document.getElementById('player1').value;
+
+    // If the form is filled
+    if(namePlayer0 && namePlayer1){
+        
+        // Manipulate the DOM with the Playernames
+        document.getElementById('name-0').textContent = namePlayer0;
+        document.getElementById('name-1').textContent = namePlayer1;
+ 
+        // animate the startscreen out
+        document.querySelector('.startscreen').style.animationPlayState = 'running';
+    } else { // show that something went rong
+        document.getElementById('submit').classList.toggle('submit-incomplete');
+        document.getElementById('submit').value = "Don't you guys have any names?";
+    }
+}
